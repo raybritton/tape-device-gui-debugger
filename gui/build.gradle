@@ -1,0 +1,27 @@
+plugins {
+	id 'application'
+	id 'kotlin'
+	id 'com.github.johnrengelman.shadow'
+	id 'org.openjfx.javafxplugin' version '0.0.9'
+	id 'kotlinx-serialization'
+}
+
+group 'com.raybritton'
+version '1.1.0'
+
+mainClassName = "com.raybritton.td_debug.MainKt"
+
+shadowJar {
+	archiveBaseName.set('td_debug')
+	archiveClassifier.set('')
+}
+
+javafx {
+	version = "15.0.1"
+	modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
+dependencies {
+	implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+	implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2"
+}

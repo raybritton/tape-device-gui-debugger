@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="1000.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <HBox prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <TextArea fx:id="tdDump" editable="false" prefHeight="80.0" prefWidth="500.0">
+                     <font>
+                        <Font name="Courier New" size="13.0" />
+                     </font>
+                  </TextArea>
+                  <VBox prefHeight="80.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="40.0" prefWidth="200.0">
+                           <children>
+                              <Label prefWidth="40.0" text="8bit" />
+                              <RadioButton fx:id="regHex" mnemonicParsing="false" prefWidth="60.0" selected="true" text="HEX">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="dump_8bit" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton mnemonicParsing="false" text="DEC" toggleGroup="$dump_8bit" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="40.0" prefWidth="200.0">
+                           <children>
+                              <Label prefWidth="40.0" text="16bit" />
+                              <RadioButton fx:id="addrHex" mnemonicParsing="false" prefWidth="60.0" selected="true" text="HEX">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="dump_16bit" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton mnemonicParsing="false" text="DEC" toggleGroup="$dump_16bit" />
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets left="8.0" />
+                     </padding>
+                  </VBox>
+                  <VBox prefHeight="80.0" prefWidth="120.0">
+                     <children>
+                        <Button fx:id="openStrings" mnemonicParsing="false" prefWidth="100.0" text="View Strings">
+                           <VBox.margin>
+                              <Insets bottom="8.0" />
+                           </VBox.margin></Button>
+                        <Button fx:id="openData" mnemonicParsing="false" prefWidth="100.0" text="View Data" />
+                     </children>
+                     <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </HBox>
+         </top>
+         <bottom>
+            <HBox BorderPane.alignment="CENTER">
+               <children>
+                  <HBox HBox.hgrow="ALWAYS">
+                     <children>
+                        <VBox prefWidth="100.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label fx:id="tdStatus" text="Ready">
+                                 <VBox.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <HBox prefHeight="40.0" prefWidth="200.0">
+                                 <children>
+                                    <Button fx:id="tdRun" mnemonicParsing="false" text="Run">
+                                       <HBox.margin>
+                                          <Insets left="8.0" right="8.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                    <Button fx:id="tdStep" mnemonicParsing="false" text="Step">
+                                       <HBox.margin>
+                                          <Insets right="8.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="40.0" prefWidth="200.0">
+                                 <children>
+                                    <Button fx:id="toggleMemory" mnemonicParsing="false" text="Toggle Memory">
+                                       <HBox.margin>
+                                          <Insets left="8.0" right="8.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                    <Button fx:id="toggleHistory" mnemonicParsing="false" text="Toggle History" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox minWidth="100.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" prefHeight="40.0">
+                                 <children>
+                                    <Label fx:id="inputCharWarning" prefWidth="160.0" text="Char input requested" visible="false">
+                                       <HBox.margin>
+                                          <Insets right="8.0" />
+                                       </HBox.margin>
+                                       <font>
+                                          <Font name="Arial Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="inputChar" mnemonicParsing="false" prefWidth="100.0" text="Send Char" />
+                                    <CheckBox fx:id="autoRun" mnemonicParsing="false" text="Run after input">
+                                       <HBox.margin>
+                                          <Insets left="16.0" />
+                                       </HBox.margin>
+                                    </CheckBox>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="40.0">
+                                 <children>
+                                    <Label fx:id="inputStrWarning" prefWidth="160.0" text="String input requested" visible="false">
+                                       <HBox.margin>
+                                          <Insets right="8.0" />
+                                       </HBox.margin>
+                                       <font>
+                                          <Font name="Arial Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="inputStr" disable="true" mnemonicParsing="false" prefWidth="100.0" text="Send String" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <VBox minWidth="100.0" prefWidth="400.0">
+                     <children>
+                        <CheckBox fx:id="opsFollowPc" mnemonicParsing="false" selected="true" text="Follow PC">
+                           <VBox.margin>
+                              <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                           </VBox.margin>
+                        </CheckBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </bottom>
+         <left>
+          <AnchorPane fx:id="memoryPane" minWidth="300.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <HBox>
+                           <children>
+                              <VBox prefHeight="120.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="40.0">
+                                       <children>
+                                          <Label text="Start">
+                                             <HBox.margin>
+                                                <Insets right="8.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <TextField fx:id="memoryStart" prefWidth="60.0" text="0000" />
+                                          <Label text="End">
+                                             <HBox.margin>
+                                                <Insets left="16.0" right="8.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <TextField fx:id="memoryEnd" prefWidth="60.0" />
+                                          <CheckBox fx:id="memoryStack" mnemonicParsing="false" text="Match Stack">
+                                             <HBox.margin>
+                                                <Insets left="16.0" />
+                                             </HBox.margin>
+                                          </CheckBox>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets left="8.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="40.0">
+                                       <children>
+                                          <Label text="Addresses">
+                                             <HBox.margin>
+                                                <Insets left="8.0" right="8.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <RadioButton fx:id="memAddrHex" mnemonicParsing="false" selected="true" text="HEX">
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="addr_display" />
+                                             </toggleGroup>
+                                          </RadioButton>
+                                          <RadioButton fx:id="memAddrDec" mnemonicParsing="false" text="DEC" toggleGroup="$addr_display">
+                                             <HBox.margin>
+                                                <Insets left="8.0" right="16.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="40.0">
+                                       <children>
+                                          <Label text="Memory">
+                                             <HBox.margin>
+                                                <Insets left="8.0" right="8.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <RadioButton fx:id="memHex" mnemonicParsing="false" selected="true" text="HEX">
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="mem_display" />
+                                             </toggleGroup>
+                                          </RadioButton>
+                                          <RadioButton fx:id="memDec" mnemonicParsing="false" text="DEC" toggleGroup="$mem_display">
+                                             <HBox.margin>
+                                                <Insets left="8.0" right="8.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                          <RadioButton fx:id="memBin" mnemonicParsing="false" text="BIN" toggleGroup="$mem_display" />
+                                          <CheckBox fx:id="memChars" mnemonicParsing="false" text="Show characters">
+                                             <HBox.margin>
+                                                <Insets left="16.0" />
+                                             </HBox.margin>
+                                          </CheckBox>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="120.0" prefWidth="40.0">
+                                 <children>
+                                    <ProgressIndicator fx:id="memoryLoading" minHeight="80.0" prefHeight="80.0" visible="false" />
+                                    <Button fx:id="memUpdate" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefWidth="40.0">
+                                       <graphic>
+                                          <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@refresh.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                       <VBox.margin>
+                                          <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                       </VBox.margin></Button>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <TextArea fx:id="memOutput" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font name="Courier New" size="13.0" />
+                           </font></TextArea>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </left>
+         <center>
+          <AnchorPane minWidth="300.0" prefWidth="500.0" BorderPane.alignment="CENTER">
+               <children>
+                  <TextArea fx:id="tdOutput" editable="false" prefHeight="200.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+         </center>
+         <right>
+            <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ListView fx:id="tdOps" minWidth="400.0" prefWidth="400.0" />
+                  <VBox fx:id="historyPane" minWidth="150.0" prefWidth="150.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="150.0" text="History" />
+                        <ListView fx:id="history" minWidth="100.0" prefHeight="200.0" prefWidth="150.0" VBox.vgrow="ALWAYS" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </right>
+      </BorderPane>
+   </children>
+</AnchorPane>

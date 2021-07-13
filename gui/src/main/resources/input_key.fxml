@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextArea fx:id="lbl" editable="false" prefHeight="180.0" prefWidth="170.0" text="Press any of the following:&#10;- Letter&#10;- Number&#10;- Symbol&#10;- Escape&#10;- Space&#10;- Return&#10;- Tab&#10;- Backspace&#10;- Delete" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+   </children>
+</AnchorPane>
