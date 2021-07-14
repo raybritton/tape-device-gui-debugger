@@ -1,7 +1,7 @@
 package com.raybritton.td_debug
 
-const val MAIN_TD_VERSION = "1.1.0"
-val COMPAT_TD_VERSIONS = listOf("1.1.0")
+const val MAIN_TD_VERSION = "1.2.0"
+val COMPAT_TD_VERSIONS = listOf("1.1.0", "1.2.0")
 
 enum class Request(val cmd: UByte) {
     Step(101u),

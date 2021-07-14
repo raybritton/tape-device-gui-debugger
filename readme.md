@@ -16,6 +16,12 @@ Requires Java to be installed
 
 To debug your app you have to generate debug info first via `tape-device assemble -d your_program.basm`
 
+## Tape Device Compatibility
+
+* `1.2.0` - Full compatibility
+* `1.1.0` - All except no usage info on strings or data
+* `1.0.0` - Incompatible as no debug data is generated
+
 ## Info
 
 ![Screenshot](screenshot.png)
