@@ -73,7 +73,6 @@ object TapeDevice {
                         val start = input.readAddr()
                         val end = input.readAddr()
                         val len = input.readAddr().toInt()
-                        println("Received mem resp from $start to $end ($len bytes)")
                         val mem = input.readNBytes(len).map { it.toUByte() }
                         onMemoryResponses.forEach { it(start, end, mem) }
                     }
@@ -167,7 +166,6 @@ object TapeDevice {
     }
 
     fun requestMemory(start: UShort, end: UShort) {
-        println("Requesting mem from $start to $end")
         val startBytes = start.toBytes()
         val endBytes = end.toBytes()
         output.write(byteArrayOf(Request.RequestMemory.cmd, startBytes[1], startBytes[0], endBytes[1], endBytes[0]))
