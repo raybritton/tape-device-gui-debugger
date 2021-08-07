@@ -1,7 +1,7 @@
 package com.raybritton.td_debug.views
 
 import com.raybritton.td_debug.format
-import com.raybritton.td_debug.windows.OpData
+import com.raybritton.td_debug.windows.MainWindow
 import javafx.fxml.FXML
 import javafx.scene.control.Label
 import javafx.scene.image.ImageView
@@ -29,10 +29,10 @@ class OpCellView {
     @FXML
     private lateinit var breakpoint: ImageView
 
-    fun update(data: OpData) {
+    fun update(data: MainWindow.OpData, showOriginalLine: Boolean) {
         opLineNum.text = data.op.lineNumber.toString()
         opByte.text = data.op.byteAddr.format(true)
-        opLine.text = data.op.processedLine
+        opLine.text = if (showOriginalLine) data.op.originalLine.trim() else data.op.processedLine
         opBytes.text = data.op.bytes.joinToString(" ") { it.format(true) }
         current.isVisible = data.isCurrentOp
         breakpoint.isVisible = data.breakpoint

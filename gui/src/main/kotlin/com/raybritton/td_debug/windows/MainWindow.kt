@@ -126,6 +126,9 @@ class MainWindow(private val tapePath: String, private val debug: TapeDebug) {
     @FXML
     private lateinit var memAddrDec: RadioButton
 
+    @FXML
+    private lateinit var originalLine: CheckBox
+
     private val ops = observableArrayList(debug.ops.map { OpData(it, false, false) })
 
     private var runner = setupRunnerThread()
@@ -231,7 +234,7 @@ class MainWindow(private val tapePath: String, private val debug: TapeDebug) {
                 while (running) {
                     addHistory()
                     TapeDevice.step()
-                    Thread.sleep(30)
+                    Thread.sleep(if (memoryPane.isVisible) 30 else 20)
                 }
                 Thread.sleep(100)
             }
@@ -245,6 +248,9 @@ class MainWindow(private val tapePath: String, private val debug: TapeDebug) {
         memoryPane.isManaged = false
         historyPane.isVisible = false
         historyPane.isManaged = false
+
+        openStrings.isDisable = debug.strings.isEmpty()
+        openData.isDisable = debug.data.isEmpty()
 
         tdOps.cellFactory = Callback { OpCell() }
         tdOps.items = ops
@@ -284,6 +290,10 @@ class MainWindow(private val tapePath: String, private val debug: TapeDebug) {
             }
             running = !running
             autoRun.isSelected = running
+        }
+
+        originalLine.onAction = EventHandler {
+            tdOps.refresh()
         }
 
         inputChar.onAction = EventHandler {
@@ -356,11 +366,9 @@ class MainWindow(private val tapePath: String, private val debug: TapeDebug) {
     }
 
     private fun setupDeviceListeners() {
-        val breakpointHit = { addr: UShort ->
-            running = false
-        }
-        val textOutput = { text: String -> tdOutput.text += text }
-        val errorOutput = { text: String -> tdOutput.text += text }
+        val breakpointHit = { addr: UShort -> running = false }
+        val textOutput = { text: String -> tdOutput.appendText(text) }
+        val errorOutput = { text: String -> tdOutput.appendText(text) }
         val processFinished = {
             running = false
             Platform.runLater {
@@ -465,6 +473,33 @@ class MainWindow(private val tapePath: String, private val debug: TapeDebug) {
             node.openWindow("Debugger", MainWindow::class, "main.fxml", 1600.0, 1000.0, false, controller)
         }
     }
+
+    data class OpData(
+        val op: TapeOp,
+        var breakpoint: Boolean,
+        var isCurrentOp: Boolean
+    )
+
+    inner class OpCell : ListCell<OpData>() {
+        private val view = OpCellView()
+
+        init {
+            val loader = FXMLLoader(javaClass.classLoader.getResource("op_cell.fxml"))
+            loader.setController(view)
+            loader.load<Parent>()
+        }
+
+        override fun updateItem(item: OpData?, empty: Boolean) {
+            super.updateItem(item, empty)
+            contentDisplay = ContentDisplay.GRAPHIC_ONLY
+            graphic = if (empty || item == null) {
+                null
+            } else {
+                view.update(item, originalLine.isSelected)
+                view.opCellBck
+            }
+        }
+    }
 }
 
 data class OpExe(
@@ -499,29 +534,3 @@ class OpExeCell : ListCell<OpExe>() {
     }
 }
 
-data class OpData(
-    val op: TapeOp,
-    var breakpoint: Boolean,
-    var isCurrentOp: Boolean
-)
-
-class OpCell : ListCell<OpData>() {
-    private val view = OpCellView()
-
-    init {
-        val loader = FXMLLoader(javaClass.classLoader.getResource("op_cell.fxml"))
-        loader.setController(view)
-        loader.load<Parent>()
-    }
-
-    override fun updateItem(item: OpData?, empty: Boolean) {
-        super.updateItem(item, empty)
-        contentDisplay = ContentDisplay.GRAPHIC_ONLY
-        graphic = if (empty || item == null) {
-            null
-        } else {
-            view.update(item)
-            view.opCellBck
-        }
-    }
-}

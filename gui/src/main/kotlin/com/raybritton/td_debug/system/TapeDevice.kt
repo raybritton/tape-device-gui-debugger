@@ -73,7 +73,6 @@ object TapeDevice {
                         val start = input.readAddr()
                         val end = input.readAddr()
                         val len = input.readAddr().toInt()
-                        println("Received mem resp from $start to $end ($len bytes)")
                         val mem = input.readNBytes(len).map { it.toUByte() }
                         onMemoryResponses.forEach { it(start, end, mem) }
                     }
@@ -138,49 +137,48 @@ object TapeDevice {
     }
 
     fun step() {
-        output.write(byteArrayOf(Request.Step.cmd.toByte(), Request.Dump.cmd.toByte()))
+        output.write(byteArrayOf(Request.Step.cmd, Request.Dump.cmd))
         output.flush()
         onSteps.forEach { it() }
     }
 
     fun requestDump() {
-        output.write(byteArrayOf(Request.Dump.cmd.toByte()))
+        output.write(byteArrayOf(Request.Dump.cmd))
         output.flush()
     }
 
     fun stepForce() {
-        output.write(byteArrayOf(Request.StepIgnoreBreakpoint.cmd.toByte(), Request.Dump.cmd.toByte()))
+        output.write(byteArrayOf(Request.StepIgnoreBreakpoint.cmd, Request.Dump.cmd))
         output.flush()
         onSteps.forEach { it() }
     }
 
     fun setBreakpoint(addr: UShort) {
         val bytes = addr.toBytes()
-        output.write(byteArrayOf(Request.SetBreakpoint.cmd.toByte(), bytes[1], bytes[0]))
+        output.write(byteArrayOf(Request.SetBreakpoint.cmd, bytes[1], bytes[0]))
         output.flush()
     }
 
     fun clearBreakpoint(addr: UShort) {
         val bytes = addr.toBytes()
-        output.write(byteArrayOf(Request.ClearBreakpoint.cmd.toByte(), bytes[1], bytes[0]))
+        output.write(byteArrayOf(Request.ClearBreakpoint.cmd, bytes[1], bytes[0]))
         output.flush()
     }
 
     fun requestMemory(start: UShort, end: UShort) {
-        println("Requesting mem from $start to $end")
         val startBytes = start.toBytes()
         val endBytes = end.toBytes()
-        output.write(byteArrayOf(Request.RequestMemory.cmd.toByte(), startBytes[1], startBytes[0], endBytes[1], endBytes[0]))
+        output.write(byteArrayOf(Request.RequestMemory.cmd, startBytes[1], startBytes[0], endBytes[1], endBytes[0]))
         output.flush()
     }
 
     fun sendChar(chr: UByte) {
-        output.write(byteArrayOf(Request.InputChar.cmd.toByte(), chr.toByte()))
+        output.write(byteArrayOf(Request.InputChar.cmd, chr.toByte()))
         output.flush()
     }
 
     fun sendString(str: String) {
-        output.write(byteArrayOf(Request.InputString.cmd.toByte(), str.length.toByte()))
+        output.write(byteArrayOf(Request.InputString.cmd, str.length.toByte()))
         output.write(str.toByteArray())
         output.flush()
     }

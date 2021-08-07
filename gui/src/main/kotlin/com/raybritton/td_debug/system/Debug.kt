@@ -49,6 +49,7 @@ data class TapeData(
 
 @Serializable
 data class Usage(
+    @SerialName("op_addr")
     val opAddr: UShort,
     val offset: Int,
     val line: Int

@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="1000.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="1000.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -155,6 +155,11 @@
                               <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                            </VBox.margin>
                         </CheckBox>
+                        <CheckBox fx:id="originalLine" mnemonicParsing="false" text="Show original line">
+                           <VBox.margin>
+                              <Insets bottom="8.0" left="8.0" right="8.0" />
+                           </VBox.margin>
+                        </CheckBox>
                      </children>
                   </VBox>
                </children>
@@ -269,7 +274,10 @@
          <center>
           <AnchorPane minWidth="300.0" prefWidth="500.0" BorderPane.alignment="CENTER">
                <children>
-                  <TextArea fx:id="tdOutput" editable="false" prefHeight="200.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <TextArea fx:id="tdOutput" editable="false" prefHeight="200.0" prefWidth="500.0" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <font>
+                        <Font name="Courier New" size="13.0" />
+                     </font></TextArea>
                </children>
             </AnchorPane>
          </center>

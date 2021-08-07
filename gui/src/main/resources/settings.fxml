@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="200.0" maxWidth="400.0" minHeight="200.0" minWidth="400.0" prefHeight="200.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.raybritton.td_debug.windows.SettingsWindow">
+<AnchorPane maxHeight="200.0" maxWidth="400.0" minHeight="200.0" minWidth="400.0" prefHeight="200.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.raybritton.td_debug.windows.SettingsWindow">
    <children>
       <TextField fx:id="exePathField" layoutX="14.0" layoutY="37.0" prefHeight="26.0" prefWidth="313.0" />
       <Label layoutX="14.0" layoutY="14.0" text="Tape Device exe path" />
