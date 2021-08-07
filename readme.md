@@ -12,7 +12,7 @@ Requires Java to be installed
 
 ### Run
 
-`java -jar td_debug-1.1.0.jar`
+`java -jar td_debug-1.2.0.jar`
 
 To debug your app you have to generate debug info first via `tape-device assemble -d your_program.basm`
 
